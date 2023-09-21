@@ -1,5 +1,5 @@
-#Xarray with Dask Arrays¶
-This tutorial demonstrates how we can use Xarrays Dask.
+# Xarray with Dask
+This tutorial demonstrates how we can use Xarrays with Dask.
 
 Learning outcomes of the tutorial are:
 1. Learn how to use Xarrays with Dask.
