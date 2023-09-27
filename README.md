@@ -78,7 +78,43 @@ This metada can then be used in plottinf data in the Xarray object.
 
 ***
 
+## Pandas and Xarray
+Xarray objects can be easily converted to and from pandas objects using the to_series(), to_dataframe() and to_xarray() methods
 
+```
+df =  data_conv.to_dataframe(name="Values")
+```
+
+## Dataset
+**xarray.Dataset** is a dict-like container of aligned DataArray objects. You can think of it as a multi-dimensional generalization of the pandas.DataFrame.
+```
+ds = xr.Dataset(dict(foo=data, bar=("x", [1, 2]), baz=np.pi))
+```
+This creates a dataset with three DataArrays named foo, bar and baz. We can use dictionary or dot indexing to pull out Dataset variables as DataArray objects. Assignment only works with dictionary indexing.
+
+When creating ds, foo is two-dimensional two dimensions x and y, bar is one-dimensional with single dimension x and and baz is a scalar not associated with any dimension in ds.Variables in datasets can have different dtype and even different dimensions, but all dimensions are assumed to refer to points in the same shared coordinate system i.e. if two variables have dimension x, that dimension must be identical in both variables.
+
+For example, when creating ds xarray automatically aligns bar with DataArray foo, i.e., they share the same coordinate system so that **ds.bar['x'] == ds.foo['x'] == ds['x']**. As the coordinates are alligned we can index ds.bar.sel(x=10), even when this dimensuin has not been defined for bar
+
+***
+
+## netCFD
+The recommended way to store xarray data structures is netCDF, which is a binary file format for self-described datasets. It is mainly used in geosciences. Xarray is based on the netCDF data model, so group of netCDF files on disk directly correspond to Dataset objects in Xarray.
+```
+ds = xr.Dataset(
+    {"foo": (("x", "y"), np.random.rand(4, 5))},
+    coords={
+        "x": [10, 20, 30, 40],
+        "y": pd.date_range("2000-01-01", periods=5),
+        "z": ("x", list("abcd")),
+    },
+)
+```
+
+Similarly we can also open an existing netCFD file.
+```
+ds_nc = xr.open_dataset("saved_on_disk.nc")
+```
 ***
 ## References
 1. [https://tutorial.dask.org/00_overview.html](https://examples.dask.org/xarray.html)
