@@ -116,6 +116,14 @@ Similarly we can also open an existing netCFD file.
 ds_nc = xr.open_dataset("saved_on_disk.nc")
 ```
 ***
+
+## Xarray and Dask
+We can convert Xarray dataset to Dask Dataframe.
+```
+dask_df = ds.to_dask_dataframe()
+dask_df.visualize()
+```
+***
 ## References
 1. [https://tutorial.dask.org/00_overview.html](https://examples.dask.org/xarray.html)
 
