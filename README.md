@@ -2,14 +2,54 @@
 This tutorial demonstrates how we can use Xarrays with Dask.
 
 Learning outcomes of the tutorial are:
-1. Learn how to use Xarrays with Dask.
-2. Learn how to scale Xarray on Dask
+1. Learn the basics of Xarray.
+2. Learn how to use Xarrays with Dask.
+3. Learn how to scale Xarray on Dask
 
 Prerequisite:
 1. Experience with Dask High-level objects 
 
 ***
 
+![](figs/xarray.png)
+
+Xarray extends the labeled data functionality of Pandas to N-dimensional array-like datasets. It shares a similar API to NumPy and Pandas and supports both Dask and NumPy arrays under the hood. In Xarray a labeled, N-dimensional array is called <span style="color:deepskyblue"> **DataArray**</span>. <span style="color:deepskyblue"> **Dimensions**</span>  provide names that xarray uses instead of the axis argument found in many numpy functions.  <span style="color:deepskyblue"> **Coordinates**</span> enable fast label based indexing and alignment. This is similar to functionality of the index found on a pandas DataFrame.
+
+```
+
+data = xr.DataArray(np.random.randn(2, 3), dims=("x", "y"), coords={"x": [10, 20]})
+
+```
+Here **x** and **y** are the dimensions and **10** and **20** are the coordinates.
+
+***
+
+## Indexing in Xarray
+There are multiple methods to indexing in Xarray
+1. Positional and by integer label, like numpy
+```
+
+data[0, :]
+
+```
+2. loc or "location": positional and coordinate label, like pandas
+```
+data.loc[10]
+
+```
+3. isel or "integer select": by dimension name and integer label
+```
+
+data.isel(x=0)
+
+```
+4. sel or "select": by dimension name and coordinate label
+```
+
+data.sel(x=10)
+
+```
+Label-based indexing is particularly usesful as we dont need to know how our array is organized. All we need to know are the dimension name and the label we wish to index. data.sel(x=10), works regardless of whether x is the first or second dimension of the array and regardless of whether 10 is the first or the second element of x.
 
 ***
 ## References
