@@ -72,6 +72,11 @@ data.attrs["units"] = "metres/sec"
 data.attrs["description"] = "A random variable created as an example."
 data.attrs["random_attribute"] = 123
 ```
+This metada can then be used in plottinf data in the Xarray object.
+
+![](figs/plot.png)
+
+***
 
 
 ***
